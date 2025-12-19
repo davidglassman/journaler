@@ -55,6 +55,11 @@ Journaler is built with:
 
 Available for **macOS**, **Windows**, and **Linux**.
 
+> [!IMPORTANT]
+> The macOS version has been signed and notarized by Apple so it should not show any warnings when you install and run it.
+>
+> However, I have not yet gotten a code-signing certificate for the Windows version. So you may see a warning after installation on Windows that says something like "Windows Protected Your PC". You can choose to "Run Anyway" or not. That's up to you. All I can do is assure you I haven't slipped in any malicious code in the download files. But hey, you don't know me so I understand if you're wary. I'll work on getting that certificate as soon as I can.
+
 ## Installation
 
 ### Download a Release (Recommended)
