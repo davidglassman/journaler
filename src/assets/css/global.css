@@ -1,0 +1,206 @@
+/********************************************
+Imports
+********************************************/
+
+@import "tailwindcss";
+
+@import "tw-animate-css";
+
+/********************************************
+Fonts
+********************************************/
+
+@font-face {
+  font-family: "Geist";
+  src: url("@/assets/fonts/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Geist", sans-serif;
+}
+
+/********************************************
+Dark Mode
+********************************************/
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/********************************************
+Accent Colors
+********************************************/
+
+:root {
+  /* Default accent color (green) - can be overridden by JS */
+  --accent-500: 34 197 94; /* green-500 */
+  --accent-300: 134 239 172; /* green-300 */
+  --accent-700: 21 128 61; /* green-700 */
+}
+
+/********************************************
+Default / Reset
+********************************************/
+
+html,
+body,
+:root {
+  height: 100%;
+}
+
+@layer base {
+  body {
+    @apply m-0 h-dvh w-full overflow-hidden bg-zinc-50 p-0 font-sans font-normal tracking-normal antialiased;
+    line-height: auto;
+  }
+
+  .dark body {
+    background-color: #151518;
+  }
+}
+
+/********************************************
+Global
+********************************************/
+
+@layer utilities {
+  .debug {
+    @apply border-1 border-red-100;
+  }
+}
+
+/********************************************
+Custom Scrollbar
+********************************************/
+
+.scroll-container {
+  @apply h-screen overflow-y-auto;
+  max-width: var(--text-width, "640px");
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/********************************************
+Tiptap (Editor)
+********************************************/
+
+.tiptap {
+  @apply outline-none;
+  padding-bottom: 50vh;
+
+  /* Default: all paragraphs are dark (focus mode off) */
+  p {
+    @apply text-zinc-700 transition-colors duration-200 dark:text-zinc-300;
+    margin-bottom: var(--paragraph-spacing, "20px");
+    font-size: var(--font-size, "20px");
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* When focus mode is enabled, make inactive paragraphs light */
+  &.focus-mode p {
+    @apply text-zinc-200 dark:text-zinc-800;
+  }
+
+  /* Active paragraph is always dark */
+  &.focus-mode p.active-paragraph {
+    @apply text-zinc-700 dark:text-zinc-300;
+  }
+
+  /* Default selection (edit mode - same styling as active line in focus mode) */
+  ::selection {
+    @apply bg-blue-100 text-zinc-700;
+  }
+
+  /* Focus mode: inactive paragraphs have lighter selection text */
+  &.focus-mode p::selection {
+    @apply text-zinc-300;
+  }
+
+  &.focus-mode ::selection {
+    @apply bg-blue-100/35;
+  }
+
+  /* Focus mode: active paragraph has darker selection text */
+  &.focus-mode p.active-paragraph::selection {
+    @apply bg-blue-100 text-zinc-700;
+  }
+}
+
+/* Dark mode selection styles (must be outside .tiptap block) */
+.dark .tiptap ::selection {
+  @apply bg-blue-200/40 text-zinc-950;
+}
+
+.dark .tiptap.focus-mode p::selection {
+  @apply text-zinc-900;
+}
+
+.dark .tiptap.focus-mode ::selection {
+  @apply bg-blue-300/20;
+}
+
+.dark .tiptap.focus-mode p.active-paragraph::selection {
+  @apply bg-blue-200/40 text-zinc-950;
+}
+
+.toast {
+  @apply rounded-lg! border-1! border-zinc-200! bg-white! text-zinc-800! shadow-none! dark:border-zinc-800! dark:bg-zinc-900! dark:text-white!;
+}
+
+/********************************************
+Calendar Accent Colors
+********************************************/
+
+.calendar-today {
+  background-color: rgb(var(--accent-500));
+}
+
+.calendar-today:hover {
+  background-color: rgb(var(--accent-500) / 0.75);
+}
+
+.dark .calendar-today {
+  background-color: rgb(var(--accent-500));
+}
+
+.dark .calendar-today:hover {
+  background-color: rgb(var(--accent-500) / 0.75);
+}
+
+.calendar-entry-current {
+  background-color: rgb(var(--accent-300) / 0.65);
+}
+
+.calendar-entry-current:hover {
+  background-color: rgb(var(--accent-300) / 0.45);
+}
+
+.dark .calendar-entry-current {
+  background-color: rgb(var(--accent-300) / 0.65);
+}
+
+.dark .calendar-entry-current:hover {
+  background-color: rgb(var(--accent-300) / 0.45);
+}
+
+.calendar-entry-other {
+  background-color: rgb(var(--accent-300) / 0.25);
+}
+
+.calendar-entry-other:hover {
+  background-color: rgb(var(--accent-300) / 0.45);
+}
+
+.dark .calendar-entry-other {
+  background-color: rgb(var(--accent-300) / 0.25);
+}
+
+.dark .calendar-entry-other:hover {
+  background-color: rgb(var(--accent-300) / 0.45);
+}
