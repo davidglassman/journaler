@@ -2,9 +2,9 @@
 ![Light Mode Banner](resources/banner_light.png#gh-light-mode-only)
 
 <picture>
-	<source media="(prefers-color-scheme: dark)" srcset="resources/preview-dark.gif">
-	<source media="(prefers-color-scheme: light)" srcset="resources/preview-light.gif">
-	<img alt="Journaler Preview" src="resources/preview-light.gif">
+	<source media="(prefers-color-scheme: dark)" srcset="resources/preview-dark.gif?v=2">
+	<source media="(prefers-color-scheme: light)" srcset="resources/preview-light.gif?v=2">
+	<img alt="Journaler Preview" src="resources/preview-light.gif?v=2">
 </picture>
 
 ## What is Journaler?
