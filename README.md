@@ -1,8 +1,8 @@
 ![Dark Mode Banner](resources/banner_dark.png#gh-dark-mode-only)
 ![Light Mode Banner](resources/banner_light.png#gh-light-mode-only)
 
-<!-- TODO: Add video showing main features -->
-![Journaler Demo](placeholder-demo.gif)
+![Dark Mode Preview](resources/preview-dark.gif)
+![Light Mode Preview](resources/preview-light.gif)
 
 ## What is Journaler?
 
