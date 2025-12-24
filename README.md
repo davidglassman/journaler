@@ -1,8 +1,11 @@
 ![Dark Mode Banner](resources/banner_dark.png#gh-dark-mode-only)
 ![Light Mode Banner](resources/banner_light.png#gh-light-mode-only)
 
-![Dark Mode Preview](resources/preview-dark.gif)
-![Light Mode Preview](resources/preview-light.gif)
+<picture>
+	<source media="(prefers-color-scheme: dark)" srcset="resources/preview-dark.gif">
+	<source media="(prefers-color-scheme: light)" srcset="resources/preview-light.gif">
+	<img alt="Journaler Preview" src="resources/preview-light.gif">
+</picture>
 
 ## What is Journaler?
 
