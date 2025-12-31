@@ -104,14 +104,18 @@ journaler/
 │   ├── preload.ts      # Preload script
 │   └── services/       # Backend services (file handling, etc.)
 ├── src/                # Vue frontend code
+│   ├── assets/         # Static assets (CSS, images, fonts)
 │   ├── components/     # Vue components
 │   ├── composables/    # Vue composables
+│   ├── lib/            # Library code (editor utilities, etc.)
 │   ├── store/          # Pinia stores
 │   └── main.ts         # Renderer entry point
 ├── shared/             # Code shared between main and renderer
+│   ├── constants/      # Shared constants
 │   ├── types/          # TypeScript types
 │   └── utils/          # Utility functions
 └── build/              # Build resources and scripts
+    └── resources/      # Icons and build scripts
 ```
 
 ### Useful Commands
