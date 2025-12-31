@@ -117,6 +117,9 @@ If you prefer to build Journaler yourself, follow these steps.
 
    This compiles the app and creates platform-specific installers in the `release/` directory.
 
+> [!Note]
+> If building for Mac, you will need to either disable the post-build `notarize.js` script or add your own Apple Developer credentials in place of mine. 
+
 #### Other Useful Commands
 
 | Command          | Description                              |
@@ -128,18 +131,6 @@ If you prefer to build Journaler yourself, follow these steps.
 | `pnpm lint:fix`  | Run ESLint and auto-fix issues           |
 | `pnpm format`    | Format code with Prettier                |
 | `pnpm typecheck` | Run TypeScript type checking             |
-
-#### Environment Variables
-
-TBD
-
-#### Building for Mac (developer account)
-
-TODO
-
-#### Building for Windows (certificate)
-
-TODO
 
 ## Contributing
 
