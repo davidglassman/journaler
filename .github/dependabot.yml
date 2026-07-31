@@ -1,0 +1,61 @@
+# Dependabot: security-first, low noise.
+# Version updates are allowlisted; Dependabot security updates (GitHub setting)
+# can still open PRs for other vulnerable packages.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    allow:
+      - dependency-name: electron
+      - dependency-name: electron-builder
+      - dependency-name: electron-builder-squirrel-windows
+      - dependency-name: vite
+      - dependency-name: "@tiptap/*"
+      - dependency-name: reka-ui
+    groups:
+      electron:
+        patterns:
+          - electron
+          - electron-builder
+          - electron-builder-squirrel-windows
+        update-types:
+          - minor
+          - patch
+      tiptap:
+        patterns:
+          - "@tiptap/*"
+        update-types:
+          - minor
+          - patch
+      vite:
+        patterns:
+          - vite
+        update-types:
+          - minor
+          - patch
+      security-electron:
+        applies-to: security-updates
+        patterns:
+          - electron
+          - electron-builder*
+          - vite
+          - "@tiptap/*"
+          - reka-ui
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 3
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
