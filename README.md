@@ -35,6 +35,8 @@ After using it for a while, I thought others might find it useful too. I've bene
 
 - **Calendar Navigation** - Jump to any date instantly. See your writing history at a glance.
 
+- **Global Search** - Find a word or phrase across all entries with Cmd/Ctrl+F. Jump straight to that day.
+
 - **Writing Metrics** - Track your streak, word counts, and writing activity over time.
 
 - **Export Your Journal** - Export all entries as a zip file anytime.

@@ -13,8 +13,10 @@ import CustomScrollbar from "@/components/shared/scrollbar/CustomScrollbar.vue";
 import { FocusParagraph } from "@/lib/editor/focus-paragraph.js";
 import { useEditorStore } from "@/store/editor-store";
 import { useJournalStore } from "@/store/journal-store";
+import { useSearchStore } from "@/store/search-store";
 import { useSettingsStore } from "@/store/settings-store";
 import { BackgroundColor, TextStyle } from "@tiptap/extension-text-style";
+import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
 import StarterKit from "@tiptap/starter-kit";
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import { storeToRefs } from "pinia";
@@ -49,10 +51,108 @@ const isSettingContent = ref(false);
 const { setIsTyping } = useEditorStore();
 const { focusMode } = storeToRefs(useEditorStore());
 const journalStore = useJournalStore();
+const searchStore = useSearchStore();
 
 const { fontSize, textWidth, paragraphSpacing } = storeToRefs(useSettingsStore());
 
+let highlightClearTimer: ReturnType<typeof setTimeout> | null = null;
+
 // ------------------------ Helpers
+
+/**
+ * Map a plain-text offset (JournalEntry.content / textToHtml rules) to a
+ * ProseMirror document position. Blocks are separated by a single `\n`.
+ */
+const mapPlainOffsetToPos = (doc: ProseMirrorNode, targetOffset: number): number | null => {
+  if (targetOffset < 0) return null;
+
+  let plainOffset = 0;
+  let isFirstBlock = true;
+  let result: number | null = null;
+
+  doc.forEach((block, blockPos) => {
+    if (result !== null) return;
+
+    if (!isFirstBlock) {
+      if (plainOffset === targetOffset) {
+        result = blockPos + 1;
+        return;
+      }
+      plainOffset += 1;
+    }
+    isFirstBlock = false;
+
+    if (plainOffset > targetOffset) return;
+
+    block.descendants((node, posInBlock) => {
+      if (result !== null) return false;
+      if (!node.isText || !node.text) return;
+
+      const absPos = blockPos + 1 + posInBlock;
+      const len = node.text.length;
+
+      if (plainOffset + len >= targetOffset) {
+        result = absPos + (targetOffset - plainOffset);
+        return false;
+      }
+
+      plainOffset += len;
+    });
+  });
+
+  if (result === null && plainOffset === targetOffset) {
+    result = doc.content.size;
+  }
+
+  return result;
+};
+
+const revealPlainTextRange = (startOffset: number, endOffset: number): boolean => {
+  if (!editor.value || endOffset <= startOffset) return false;
+
+  const { doc } = editor.value.state;
+  const from = mapPlainOffsetToPos(doc, startOffset);
+  const to = mapPlainOffsetToPos(doc, endOffset);
+
+  if (from === null || to === null || to <= from) return false;
+
+  if (highlightClearTimer) {
+    clearTimeout(highlightClearTimer);
+    highlightClearTimer = null;
+  }
+
+  editor.value
+    .chain()
+    .focus()
+    .setTextSelection({ from, to })
+    .setBackgroundColor("rgb(var(--accent-300) / 0.55)")
+    .run();
+
+  scrollToCursor(true);
+
+  highlightClearTimer = setTimeout(() => {
+    if (!editor.value) return;
+
+    editor.value
+      .chain()
+      .setTextSelection({ from, to })
+      .unsetBackgroundColor()
+      .setTextSelection(to)
+      .run();
+    highlightClearTimer = null;
+  }, 1500);
+
+  return true;
+};
+
+const tryApplyPendingReveal = () => {
+  const reveal = searchStore.pendingReveal;
+
+  if (!reveal || !editor.value) return;
+
+  revealPlainTextRange(reveal.startOffset, reveal.endOffset);
+  searchStore.clearPendingReveal();
+};
 
 const scrollToCursor = (smooth = true) => {
   if (!editor.value || !scrollContainer.value) return;
@@ -130,6 +230,11 @@ onMounted(() => {
     },
 
     onUpdate: () => {
+      if (highlightClearTimer) {
+        clearTimeout(highlightClearTimer);
+        highlightClearTimer = null;
+      }
+
       emit("update:modelValue", editor.value?.getHTML());
 
       setIsTyping(true);
@@ -147,6 +252,10 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+  if (highlightClearTimer) {
+    clearTimeout(highlightClearTimer);
+    highlightClearTimer = null;
+  }
   editor.value?.destroy();
 });
 
@@ -173,6 +282,20 @@ watch(
         scrollContainer.value.scrollTo({ top: 0, behavior: "auto" });
       }
       isSettingContent.value = false;
+    });
+  }
+);
+
+watch(
+  () => searchStore.pendingReveal,
+  (reveal) => {
+    if (!reveal || !editor.value) return;
+
+    // Nested rAF: run after setContent → scroll-to-top so reveal is not undone.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        tryApplyPendingReveal();
+      });
     });
   }
 );
@@ -223,7 +346,8 @@ const focusEnd = () => {
 defineExpose({
   spellcheck,
   paragraphSpacing,
-  focusEnd
+  focusEnd,
+  revealPlainTextRange
 });
 </script>
 

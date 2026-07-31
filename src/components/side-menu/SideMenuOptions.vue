@@ -20,12 +20,14 @@
 
 <script setup lang="ts">
 import { useJournalStore } from "@/store/journal-store";
+import { useSearchStore } from "@/store/search-store";
 import { useSlidePanelStore } from "@/store/slide-panel-store";
 import type { FunctionalComponent } from "vue";
 import { toast } from "vue-sonner";
 import IconChart from "~icons/mdi/bar-chart";
 import IconExport from "~icons/mdi/download-outline";
 import IconPrintCurrent from "~icons/mdi/file-document-outline";
+import IconSearch from "~icons/mdi/magnify";
 import IconPrint from "~icons/mdi/printer-outline";
 import IconSettings from "~icons/mdi/settings-outline";
 
@@ -41,6 +43,7 @@ interface SideMenuItem {
 
 const slidePanelStore = useSlidePanelStore();
 const journalStore = useJournalStore();
+const searchStore = useSearchStore();
 
 // ------------------------ Functions
 
@@ -159,6 +162,13 @@ async function handlePrintCurrent() {
 }
 
 const items: SideMenuItem[] = [
+  {
+    name: "Search",
+    icon: IconSearch,
+    action: () => {
+      searchStore.open();
+    }
+  },
   {
     name: "Export",
     icon: IconExport,

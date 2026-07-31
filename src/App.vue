@@ -33,6 +33,8 @@
         :toast-options="{
           class: 'toast'
         }" />
+
+      <GlobalSearchOverlay />
     </div>
   </div>
 </template>
@@ -41,10 +43,12 @@
 import AppTitlebar from "@/components/app-header/AppTitlebar.vue";
 import AppWindowControls from "@/components/app-header/AppWindowControls.vue";
 import EditorArea from "@/components/editor/EditorArea.vue";
+import GlobalSearchOverlay from "@/components/search/GlobalSearchOverlay.vue";
 import SideMenu from "@/components/side-menu/SideMenu.vue";
 import SlidePanel from "@/components/slide-panel/SlidePanel.vue";
 import { Toaster } from "@/components/ui/sonner";
 import { useAccentColor } from "@/composables/use-accent-color";
+import { useGlobalSearchShortcut } from "@/composables/use-global-search-shortcut";
 import { usePlatform } from "@/composables/use-platform";
 import { useTheme } from "@/composables/use-theme";
 import { useEditorStore } from "@/store/editor-store";
@@ -61,6 +65,7 @@ const { isMac } = usePlatform();
 
 useTheme(); // Initialize theme sync on app startup
 useAccentColor(); // Initialize accent color sync on app startup
+useGlobalSearchShortcut();
 
 const settingsStore = useSettingsStore();
 const journalStore = useJournalStore();

@@ -2,7 +2,7 @@
   "name": "journaler",
   "appName": "Journaler",
   "description": "A minimalist daily writing app",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "David Glassman",
   "private": true,
   "type": "module",
@@ -17,7 +17,7 @@
     "typecheck": "vue-tsc --build",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck && vite build",
+    "check": "pnpm format && pnpm lint && pnpm typecheck && vite build",
     "build": "vite build && electron-builder --publish never",
     "build:full": "pnpm check && pnpm build",
     "build:icon": "./build/resources/scripts/build-icon.sh"
