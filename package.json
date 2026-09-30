@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@internationalized/date": "^3.10.0",
-    "@tiptap/core": "^3.29.2",
+    "@tiptap/core": "^3.30.4",
     "@tiptap/extension-list": "^3.29.2",
     "@tiptap/extension-text-style": "^3.29.2",
     "@tiptap/pm": "^3.29.2",
