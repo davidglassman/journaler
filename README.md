@@ -1,6 +1,9 @@
 ![Dark Mode Banner](resources/banner_dark.png#gh-dark-mode-only)
 ![Light Mode Banner](resources/banner_light.png#gh-light-mode-only)
 
+> [!IMPORTANT]
+> **This project is in maintenance mode**. It does everything I need at the moment. I will review/accept PR's for new features, but I don't plan on adding any new features myself for a while.
+
 <picture>
 	<source media="(prefers-color-scheme: dark)" srcset="resources/preview-dark.gif?v=2">
 	<source media="(prefers-color-scheme: light)" srcset="resources/preview-light.gif?v=2">
@@ -134,42 +137,6 @@ If you prefer to build Journaler yourself, follow these steps.
 | `pnpm format`    | Format code with Prettier                |
 | `pnpm typecheck` | Run TypeScript type checking             |
 
-## Contributing
-
-Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting a pull request.
-
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Support the Project
-
-Journaler is completely free. If you find it useful and want to support continued development, consider buying me a coffee.
-
-[Buy Me a Coffee](https://ko-fi.com/davidglassman)
-
-## Reporting Bugs
-
-If you find a bug, please [open an issue](https://github.com/davidglassman/journaler/issues/new) with:
-
-- **Title**: A clear, descriptive title
-- **Description**: Include the following:
-  - Steps to reproduce the issue
-  - Expected behavior vs. actual behavior
-  - Your operating system and Journaler version
-  - Screenshots if applicable
-- **Label**: Select the `bug` label
-
-## Suggesting Features
-
-I'll be reviewing feature requests periodically when determining future "roadmap" work. If you have an idea for something new you'd like to see in the app, let me know!
-
-Please [open an issue](https://github.com/davidglassman/journaler/issues/new) and include:
-
-- **Title**: A clear description of the feature
-- **Description**: Include the following:
-  - Why it would be useful
-  - Any implementation ideas you have
-- **Label**: Select the `feature request` label
-
-Before submitting, please check the [existing issues](https://github.com/davidglassman/journaler/issues) to avoid duplicates.
